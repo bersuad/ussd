@@ -8,11 +8,11 @@ import {
   StyleSheet, 
   Text, 
   TextInput, 
-  FlatList, 
   TouchableOpacity, 
   Image,
   } from 'react-native';
 import RNImmediatePhoneCall from 'react-native-immediate-phone-call';
+import { SuperGridSectionList } from 'react-native-super-grid';
 // import 'react-native-gesture-handler';
 
 export default class FlexDirectionBasics extends Component {
@@ -28,16 +28,25 @@ export default class FlexDirectionBasics extends Component {
         isVisible: false,
         modalVisible:false,
         userSelected:[],
-        data: [
+        items:[
+            {
+                data: [
           {id:1,  name: "Check Balance", url:`*901*${this.state.pincode}*1*2#`,         image:require("./../assets/images/bonds.png"),   count:124.711},
-          {id:7,  name: "Mobile CardTransfer", url:"",  image:require("./../assets/images/mobile-payment.png"),        count:114.888} ,
-          {id:8,  name: "Cash Withdraw",url:``,         image:require("./../assets/images/money-transfer.png"),        count:114.888} ,
-          {id:2,  name: "Home Payments", url:`*901*`,         image:require("./../assets/images/real-estate.png"),       count:234.722},
-          {id:3,  name: "Mobile Card", url:"linking",           image:require("./../assets/images/initiate-money-transfer.png"), count:324.723} ,
-          {id:4,  name: "Exchange Rate", url:"linking",         image:require("./../assets/images/exchange.png"),    count:154.573} ,
-          {id:6,  name: "Send Money", url:"linking",            image:require("./../assets/images/money-transfer.png"),        count:334.788} ,
+          {id:2,  name: "Mobile CardTransfer", url:"",  image:require("./../assets/images/mobile-payment.png"),        count:114.888} ,
+          {id:3,  name: "Cash Withdraw",url:``,         image:require("./../assets/images/money-transfer.png"),        count:114.888} ,
+          {id:4,  name: "Home Payments", url:`*901*`,         image:require("./../assets/images/real-estate.png"),       count:234.722},
+          {id:5,  name: "Mobile Card", url:"linking",           image:require("./../assets/images/initiate-money-transfer.png"), count:324.723} ,
+          {id:6,  name: "Exchange Rate", url:"linking",         image:require("./../assets/images/exchange.png"),    count:154.573} ,
+          {id:7,  name: "Send Money", url:"linking",            image:require("./../assets/images/money-transfer.png"),        count:334.788} ,
+          {id:8,  name: "Exchange Rate", url:"linking",         image:require("./../assets/images/exchange.png"),    count:154.573} ,
+        //   {id:9,  name: "Send Money", url:"linking",            image:require("./../assets/images/money-transfer.png"),        count:334.788} ,
+        //   {id:10,  name: "Exchange Rate", url:"linking",         image:require("./../assets/images/exchange.png"),    count:154.573} ,
+        //   {id:11,  name: "Send Money", url:"linking",            image:require("./../assets/images/money-transfer.png"),        count:334.788} ,
+        //   {id:12,  name: "Exchange Rate", url:"linking",         image:require("./../assets/images/exchange.png"),    count:154.573} ,
+        //   {id:13,  name: "Send Money", url:"linking",            image:require("./../assets/images/money-transfer.png"),        count:334.788} ,
+        //   {id:14,  name: "Exchange Rate", url:"linking",         image:require("./../assets/images/exchange.png"),    count:154.573} ,
           
-        ]
+        ]}]
       };
   }
   
@@ -78,16 +87,7 @@ export default class FlexDirectionBasics extends Component {
   render() {
     return (
       // Try setting `flexDirection` to `column`.
-      <View style={{
-        flex: 1,
-        flexDirection: 'column', //column-reverse, row, row-reverse
-        justifyContent: 'space-around', //flex-start, flex-end, center,space-between
-        alignItems: 'center', //stretch, flex-start, flex-end, center, baseline 
-        alignContent: 'center', //'flex-start' 'flex-end'  'stretch' 'space-between' 'space-around' 
-        //flexGrow: 1,//describes how any space within a container should be distributed among its children along the main axis
-        flexShrink: 0,
-        backgroundColor: '#FFFFFF'
-      }}>
+      <View style={styles.MainContainer}>
         <Modal animationType = {"slide"} transparent = {true}
             visible = {this.state.isVisible}
             onRequestClose = {() =>{ console.log("Modal has been closed.") } }>
@@ -129,42 +129,46 @@ export default class FlexDirectionBasics extends Component {
               </View>
             </View>
         </Modal>
-        <View style={styles.gridView}>
-            <FlatList 
-                style={styles.contentList}
-                columnWrapperStyle={styles.listContainer}
-                data={this.state.data}
-                keyExtractor= {(item) => {
-                return item.id.toString();
-                }}
-                renderItem={({item}) => {
-                return (
-                    <View style={styles.listGrid}>
-                        <TouchableOpacity style={styles.card} onPress={() => {this.setState({ isVisible: true})}}>
-                            {/* onPress ={()=>{this.setState({ isVisible: true})}} */}
-                            <Image style={styles.image} source={item.image}/>
-                            <View style={styles.cardContent}>
+        
+        <SuperGridSectionList        
+            itemDimension={126}     
+            sections={this.state.items}
+            keyExtractor= {(item) => {
+            return item.id.toString();
+            }}
+            style={styles.gridView}
+            renderItem={({item}) => {
+            return (
+                <View style={styles.listGrid}>
+                    <TouchableOpacity style={styles.card} onPress={() => {this.setState({ isVisible: true})}}>
+                        {/* onPress ={()=>{this.setState({ isVisible: true})}} */}
+                        <Image style={styles.image} source={item.image}/>
+                        <View style={styles.cardContent}>
                             <Text style={styles.name}>{item.name}</Text>
                             {/* <Text style={styles.count}>{item.count}</Text> */}
                             {/* <TouchableOpacity style={styles.followButton} onPress={()=> this.clickEventListener(item)}>
                                 <Text style={styles.followButtonText}>Explore now</Text>  
                             </TouchableOpacity> */}
-                            </View>
-                        </TouchableOpacity>
-                    </View>            
-                )}}/>
-        </View>
+                        </View>
+                    </TouchableOpacity>
+                </View>            
+            )}}/>
+        
       </View>
     );
   }
 }
 const styles = StyleSheet.create({
     gridView:{
-        justifyContent: 'center',
-        flex:1,
-        margin: 10,
-        paddingTop: (Platform.OS) === 'ios' ? 20 : 0,
-        width:'100%'
+        // paddingTop: 25,
+        marginBottom: 10,
+        flex: 1,
+    },
+    MainContainer:{
+        flex: 1,
+        justifyContent: "center",
+        backgroundColor: "#FFFFFF",
+        
     },
     listGrid:{
         justifyContent: 'center',
@@ -183,7 +187,7 @@ const styles = StyleSheet.create({
         width:100,
         color: '#010066',
         alignItems:'center',
-        padding:6.4,
+        padding:6,
         borderRadius: 30,
     },
     close:{
@@ -191,13 +195,15 @@ const styles = StyleSheet.create({
         bottom:10,
         right:120,
         color:'#fff',
-        backgroundColor:'rgba(1, 0, 102,0.55)',  
+        backgroundColor:'rgba(1, 0, 102,0.77)',  
         height:30,
         width:100,
         color: '#010066',
         alignItems:'center',
-        padding:6.4,
+        padding:6,
         borderRadius: 30,
+        borderWidth:0.4,
+        borderColor:'rgba(255,255,255,0.7)'
     },
     btnText:{
         color:'#FFFFFF',
@@ -205,6 +211,7 @@ const styles = StyleSheet.create({
         fontWeight:'bold'
     },
     textInput: {
+        paddingTop:20,
         margin: 5,
         height: 50,
         width:'80%',
@@ -252,7 +259,7 @@ const styles = StyleSheet.create({
       backgroundColor:"white",
       padding: 10,
       borderRadius:3,
-      width:'40%',
+      width:'100%',
       justifyContent: 'center',
       alignItems: 'center',
     //   height:'auto'
@@ -291,7 +298,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         margin: 0,
-        backgroundColor: 'rgba(1, 0, 102, 0.8)',
+        backgroundColor: 'rgba(1, 0, 102, 0.88)',
         width: 320,
         height: 300,
      },

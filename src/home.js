@@ -9,8 +9,8 @@ import Icon from 'react-native-vector-icons/Ionicons';
 // import { FontAwesome5 } from 'react-native-vector-icons/vector-icons'; 
 // import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import FirstPage from './mobile_ussd';
-import SecondPage from './phone_ussd';
+import Mobile from './mobile_ussd';
+import Phone from './phone_ussd';
 
 const Stack = createStackNavigator();
 const Tab = createMaterialTopTabNavigator();
@@ -35,22 +35,23 @@ function TabStack() {
         },
       }}>
       <Tab.Screen
-        name="FirstPage"
-        component={FirstPage}
+        name="Mobile"
+        component={Mobile}
         options={{
+          showIcon:true,
           tabBarLabel: 'Home',
-          // tabBarIcon: (
-          //   <Icon  
-          //     name="md-menu"
-          //     color={'#fff'}  
-          //     size={30}  
-          //     style={{marginLeft: 20}}
-          //   />  
-          // ),
+          tabBarIcon: (
+            <Icon  
+              name="md-menu"
+              color={'#fff'}  
+              size={30}  
+              style={{marginLeft: 100}}
+            />  
+          ),
         }}  />
       <Tab.Screen
-        name="SecondPage"
-        component={SecondPage}
+        name="Phone"
+        component={Phone}
         options={{
           tabBarLabel: 'Setting',
           // tabBarIcon: ({ color, size }) => (

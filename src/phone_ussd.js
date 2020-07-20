@@ -23,7 +23,7 @@ const FirstPage = ({ navigation }) => {
           </Text>
           <TouchableOpacity
             style={styles.button}
-            onPress={() => navigation.navigate('FirstPage')}>
+            onPress={() => navigation.navigate('Mobile')}>
             <Text>Go to BUssd</Text>
           </TouchableOpacity>
         </View>
