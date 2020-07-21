@@ -1,6 +1,4 @@
-//This is an example code for Navigation Drawer with Custom Side bar//
 import React, { Component } from 'react';
-//import react in our code.
 import {
   View,
   StyleSheet,
@@ -11,9 +9,7 @@ import {
   Text,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';  
-// import all basic components
 
-//Import React Navigation
 import {createAppContainer} from 'react-navigation';
 import {createDrawerNavigator} from 'react-navigation-drawer';
 import {createStackNavigator} from 'react-navigation-stack';
@@ -42,11 +38,11 @@ class NavigationDrawerStructure extends Component {
           <Icon  
             name="md-menu"
             color={'#fff'}  
-            size={30}  
+            size={36}  
             style={{marginLeft: 20}}
           />  
+          {/* <Image source={require('./../assets/images/awash.png')} style={{width: 40, height:40, marginLeft: '100%'}}/> */}
         </TouchableOpacity>
-        <Image source={require('./../assets/images/awash.png')} style={{width: 40, height:40, marginLeft:'60%'}}/>
       </View>
     );
   }
@@ -58,13 +54,14 @@ const FirstActivity_StackNavigator = createStackNavigator({
   First: {
     screen: Screen1,
     navigationOptions: ({ navigation }) => ({
-      title: 'Awash Bank',
+      // title: 'Home',
       headerLeft: ()=> <NavigationDrawerStructure navigationProps={navigation} />,
       headerStyle: {
         backgroundColor: '#F69139',
       },
       headerTintColor: '#fff',
-      headerTitleAlign:'right',
+      headerTitleAlign:'center',
+      headerTitle:'Awash Bank',
     }),
   },
 });
