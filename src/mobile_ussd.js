@@ -89,19 +89,19 @@ export default class FlexDirectionBasics extends Component {
       // Try setting `flexDirection` to `column`.
       <View style={styles.MainContainer}>
         <Modal animationType = {"slide"} transparent = {true}
-            visible = {this.state.isVisible}
-            onRequestClose = {() =>{ console.log("Modal has been closed.") } }>
-            {/*All views of Modal*/}
-            {/*Animation can be slide, slide, none*/}
-            <View 
-            behavior={Platform.OS == "ios" ? "padding" : "height"}
-            style={styles.modal_view}
-            >
-              <View style = {styles.modal}>
-                <Text style = {styles.text}>Please Enter your M.B pincode</Text>
+          visible = {this.state.isVisible}
+          onRequestClose = {() =>{ console.log("Modal has been closed.") } }>
+          {/*All views of Modal*/}
+          {/*Animation can be slide, slide, none*/}
+          <View 
+          behavior={Platform.OS == "ios" ? "padding" : "height"}
+          style={styles.modal_view}
+        >
+            <View style = {styles.modal}>
+              <Text style = {styles.text}>Please Enter your M.B pincode</Text>
                 
-                  <TextInput
-                      onChangeText={(text) => this.setState({pincode:text})}
+              <TextInput
+                onChangeText={(text) => this.setState({pincode:text})}
                       returnKeyLabel = {"Next"}
                       placeholder='Pin Code'
                       keyboardType={'numeric'}
@@ -110,22 +110,22 @@ export default class FlexDirectionBasics extends Component {
                       placeholderTextColor={'#fff'}
                       return
                       secureTextEntry={true}
-                      style={styles.textInput}
-                  />
-                <TouchableOpacity
-                    style={styles.close}
-                    onPress = {() => {
-                        this.setState({ isVisible:!this.state.isVisible})
-                    }}
-                >
-                    <Text style={styles.btnText}>Cancle</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                    style={styles.sendBtn}
-                    onPress={()=>this._alert()}
-                >
-                    <Text style={styles.btnText}>Send</Text>
-                </TouchableOpacity>
+                style={styles.textInput}
+              />
+              <TouchableOpacity
+                  style={styles.close}
+                  onPress = {() => {
+                      this.setState({ isVisible:!this.state.isVisible})
+                  }}
+              >
+                  <Text style={styles.btnText}>Cancle</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                  style={styles.sendBtn}
+                  onPress={()=>this._alert()}
+              >
+                  <Text style={styles.btnText}>Send</Text>
+              </TouchableOpacity>
               </View>
             </View>
         </Modal>
@@ -310,7 +310,8 @@ const styles = StyleSheet.create({
       flex: 1,
       flexDirection: 'column',
       justifyContent: 'center',
-      alignItems: 'center'
+      alignItems: 'center',
+      backgroundColor: 'rgba(100, 100, 100,0.45)',
      }
  });
 

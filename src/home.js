@@ -39,7 +39,7 @@ function TabStack() {
         component={Mobile}
         options={{
           showIcon:true,
-          tabBarLabel: 'Home',
+          tabBarLabel: 'Mobile Banking',
           tabBarIcon: (
             <Icon  
               name="md-menu"
@@ -53,7 +53,7 @@ function TabStack() {
         name="Phone"
         component={Phone}
         options={{
-          tabBarLabel: 'Setting',
+          tabBarLabel: 'Wallet',
           // tabBarIcon: ({ color, size }) => (
           //   <MaterialCommunityIcons name="settings" color={color} size={size} />
           // ),

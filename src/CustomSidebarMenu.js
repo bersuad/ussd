@@ -6,12 +6,8 @@ import { Icon } from 'react-native-elements';
 export default class CustomSidebarMenu extends Component {
   constructor() {
     super();
-    //Setting up the Main Top Large Image of the Custom Sidebar
-    this.proileImage =
-      './../assets/pending.png';
-    //Array of the sidebar navigation option with icon and screen to navigate
-    //This screens can be any screen defined in Drawer Navigator in App.js
-    //You can find the Icons from here https://material.io/tools/icons/
+    this.proileImage ='./../assets/images/awash.png';
+    
     this.items = [
       {
         navOptionThumb: 'camera',
@@ -35,9 +31,10 @@ export default class CustomSidebarMenu extends Component {
       <View style={styles.sideMenuContainer}>
         {/*Top Large Image */}
         <Image
-          source={require('./../assets/pending.png')}
+          source={require('./../assets/images/awash.png')}
           style={styles.sideMenuProfileIcon}
         />
+        <Text style={{color:'#010066', fontSize:20, paddingTop: 22}}>Awash Bank</Text>
         {/*Divider between Top Image and Sidebar Option*/}
         <View
           style={{
@@ -56,16 +53,16 @@ export default class CustomSidebarMenu extends Component {
                 alignItems: 'center',
                 paddingTop: 10,
                 paddingBottom: 10,
-                backgroundColor: global.currentScreenIndex === key ? '#e0dbdb' : '#ffffff',
+                backgroundColor: global.currentScreenIndex === key ? '#7171bc' : '#ffffff',
               }}
               key={key}>
               <View style={{ marginRight: 10, marginLeft: 20 }}>
-                <Icon name={item.navOptionThumb} size={25} color="#808080" />
+                <Icon name={item.navOptionThumb} size={25} color="#F69139" />
               </View>
               <Text
                 style={{
                   fontSize: 15,
-                  color: global.currentScreenIndex === key ? 'red' : 'black',
+                  color: global.currentScreenIndex === key ? '#FFFFFF' : '#010066',
                 }}
                 onPress={() => {
                   global.currentScreenIndex = key;
@@ -90,8 +87,8 @@ const styles = StyleSheet.create({
   },
   sideMenuProfileIcon: {
     resizeMode: 'center',
-    width: 150,
-    height: 150,
+    width: 120,
+    height: 120,
     marginTop: 20,
     borderRadius: 150 / 2,
   },
