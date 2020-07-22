@@ -13,25 +13,25 @@ import {
   } from 'react-native';
 import RNImmediatePhoneCall from 'react-native-immediate-phone-call';
 import { SuperGridSectionList } from 'react-native-super-grid';
+import BalanceModal from './w_ussd/Balance';
 // import 'react-native-gesture-handler';
-
 export default class FlexDirectionBasics extends Component {
-  state = {
-    isVisible: false, //state of modal default false
-  }
+  
   constructor(props){
     super(props)
 
     this.state = {
         pincode: '',
         password: '',
-        isVisible: false,
+        amount:'',
+        isVisible:false,
+        cardModal: false,
         modalVisible:false,
         userSelected:[],
         items:[
             {
                 data: [
-          {id:1,  name: "Check Balance", url:`*901*${this.state.pincode}*1*2#`,         image:require("./../assets/images/bonds.png"),   count:'isVis'},
+          {id:1,  name: "Check Balance", url:"",         image:require("./../assets/images/bonds.png"),   count:1234},
           {id:2,  name: "Mobile Card", url:"",  image:require("./../assets/images/mobile-payment.png"),        count:114.888} ,
           {id:3,  name: "Send Mobile Card", url:"",  image:require("./../assets/images/send_card.png"),        count:114.888} ,
           {id:4,  name: "Money Transfer",url:``,         image:require("./../assets/images/transfer.png"),        count:114.888} ,
@@ -59,14 +59,16 @@ export default class FlexDirectionBasics extends Component {
                 {
                     title: "Phone Call Permission",
                     message:
-                        "Lefayda CS App needs access to your phone call " +
+                        "Awash Bank needs access to your phone call " +
                         "so it can use it to top-up your mobile credits when requested.",
                     buttonPositive: "OK"
                 }
             );
             if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-              console.log(this.state.pincode);
-              RNImmediatePhoneCall.immediatePhoneCall(`*901*${this.state.pincode}*1*1#`);
+              // console.log(this.state.pincode); 
+              this.setState({ cardModal:!this.state.cardModal});
+              RNImmediatePhoneCall.immediatePhoneCall(`*901*${this.state.pincode}*2*2*1*1*${this.state.amount}*1#`);
+              
             } else {
                 Alert.alert(
                     "Permission Denied",
@@ -77,12 +79,26 @@ export default class FlexDirectionBasics extends Component {
             alert("Error occured while requesting permission for phone call.");
         }
     }
+    _close(){
+        this.setState({ isVisible:false})
+    }
     clickEventListener = (item) => {
-        // Alert.alert('Message', 'Item clicked. '+item.name);
+      if (item === 1) {
+        console.log(item);
+        this.setState({ isVisible: true})
+        
+        } else if(item === 2) {
+          this.setState({ cardModal: true})
+        }else{
+          Alert.alert('noting');
+        }
         // const url=item.url;
-        RNImmediatePhoneCall.immediatePhoneCall(`*804#`);
+        // RNImmediatePhoneCall.immediatePhoneCall(`*804#`);
                 
         prompt:true
+      }
+      closeModal(){
+        this.setState({ isVisible:!this.state.isVisible})
       }
   
   render() {
@@ -90,16 +106,21 @@ export default class FlexDirectionBasics extends Component {
       // Try setting `flexDirection` to `column`.
       <View style={styles.MainContainer}>
         <Modal animationType = {"slide"} transparent = {true}
-          visible = {this.state.isVisible}
-          onRequestClose = {() =>{ console.log("Modal has been closed.") } }>
+                visible = {this.state.isVisible}
+                onRequestClose = {() =>{ this.setState({ isVisible:!this.state.isVisible}) } }>
+          <BalanceModal closeModal={() => this.closeModal()}/>
+        </Modal>
+        <Modal animationType = {"slide"} transparent = {true}
+          visible = {this.state.cardModal}
+          onRequestClose = {() =>{ this.setState({ cardModal:!this.state.cardModal}) } }>
           {/*All views of Modal*/}
           {/*Animation can be slide, slide, none*/}
           <View 
-          behavior={Platform.OS == "ios" ? "padding" : "height"}
-          style={styles.modal_view}
-        >
+            behavior={Platform.OS == "ios" ? "padding" : "height"}
+            style={styles.modal_view}
+          >
             <View style = {styles.modal}>
-              <Text style = {styles.text}>Please Enter your M.B pincode</Text>
+              <Text style = {styles.text}>Please Enter your wallet pincode</Text>
                 
               <TextInput
                 onChangeText={(text) => this.setState({pincode:text})}
@@ -113,10 +134,22 @@ export default class FlexDirectionBasics extends Component {
                       secureTextEntry={true}
                 style={styles.textInput}
               />
+              <TextInput
+                onChangeText={(text) => this.setState({amount:text})}
+                      returnKeyLabel = {"Next"}
+                      placeholder='Birr Amount'
+                      keyboardType={'numeric'}
+                      maxLength={5}
+                      style={styles.text}
+                      placeholderTextColor={'#fff'}
+                      return
+                style={styles.textInput}
+              />
+              
               <TouchableOpacity
                   style={styles.close}
                   onPress = {() => {
-                      this.setState({ isVisible:!this.state.isVisible})
+                      this.setState({ cardModal:!this.state.cardModal})
                   }}
               >
                   <Text style={styles.btnText}>Cancle</Text>
@@ -141,7 +174,7 @@ export default class FlexDirectionBasics extends Component {
             renderItem={({item}) => {
             return (
                 <View style={styles.listGrid}>
-                    <TouchableOpacity style={styles.card} onPress ={()=>{this.setState({ isVisible: true})}}>
+                    <TouchableOpacity style={styles.card} onPress ={()=>this.clickEventListener(item.id)}>
                         {/* onPress ={()=>{this.setState({ isVisible: true})}} */}
                         <Image style={styles.image} source={item.image}/>
                         <View style={styles.cardContent}>
@@ -297,7 +330,8 @@ const styles = StyleSheet.create({
         margin: 0,
         backgroundColor: 'rgba(1, 0, 102, 0.88)',
         width: 320,
-        height: 300,
+        minHeight: 330,
+        maxHeight:600,
      },
      text: {
         color: '#fff',

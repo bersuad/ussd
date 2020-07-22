@@ -16,8 +16,7 @@ import {createStackNavigator} from 'react-navigation-stack';
 
 //Import all the screens
 import Screen1 from './home';
-import Screen2 from './menu_list';
-import Screen3 from './side_menu';
+
 
 //Import Custom Sidebar
 import CustomSidebarMenu from './CustomSidebarMenu';
@@ -67,66 +66,55 @@ const FirstActivity_StackNavigator = createStackNavigator({
 });
 
 //Stack Navigator for the Second Option of Navigation Drawer
-const Screen2_StackNavigator = createStackNavigator({
-  //All the screen from the Second Option will be indexed here
-  Second: {
-    screen: Screen2,
-    navigationOptions: ({ navigation }) => ({
-      title: 'Demo Screen 2',
-      headerLeft: ()=> <NavigationDrawerStructure navigationProps={navigation} />,
+// const Screen2_StackNavigator = createStackNavigator({
+//   //All the screen from the Second Option will be indexed here
+//   Second: {
+//     screen: Screen2,
+//     navigationOptions: ({ navigation }) => ({
+//       title: 'Demo Screen 2',
+//       headerLeft: ()=> <NavigationDrawerStructure navigationProps={navigation} />,
 
-      headerStyle: {
-        backgroundColor: '#FF9800',
-      },
-      headerTintColor: '#fff',
-    }),
-  },
-});
+//       headerStyle: {
+//         backgroundColor: '#FF9800',
+//       },
+//       headerTintColor: '#fff',
+//     }),
+//   },
+// });
 
 //Stack Navigator for the Third Option of Navigation Drawer
-const Screen3_StackNavigator = createStackNavigator({
-  //All the screen from the Third Option will be indexed here
-  Third: {
-    screen: Screen3,
-    navigationOptions: ({ navigation }) => ({
-      title: 'Demo Screen 3',
-      headerLeft: ()=> <NavigationDrawerStructure navigationProps={navigation} />,
-      headerStyle: {
-        backgroundColor: '#FF9800',
-      },
-      headerTintColor: '#fff',
-    }),
-  },
-});
+// const Screen3_StackNavigator = createStackNavigator({
+//   //All the screen from the Third Option will be indexed here
+//   Third: {
+//     screen: Screen3,
+//     navigationOptions: ({ navigation }) => ({
+//       title: 'Demo Screen 3',
+//       headerLeft: ()=> <NavigationDrawerStructure navigationProps={navigation} />,
+//       headerStyle: {
+//         backgroundColor: '#FF9800',
+//       },
+//       headerTintColor: '#fff',
+//     }),
+//   },
+// });
 
 //Drawer Navigator Which will provide the structure of our App
-const DrawerNavigatorExample = createDrawerNavigator(
+const DrawerNavigator = createDrawerNavigator(
   {
     //Drawer Optons and indexing
     NavScreen1: {
       screen: FirstActivity_StackNavigator,
       navigationOptions: {
-        drawerLabel: 'Demo Screen 1',
+        // drawerLabel: 'Demo Screen 1',
       },
     },
-    NavScreen2: {
-      screen: Screen2_StackNavigator,
-      navigationOptions: {
-        drawerLabel: 'Demo Screen 2',
-      },
-    },
-    NavScreen3: {
-      screen: Screen3_StackNavigator,
-      navigationOptions: {
-        drawerLabel: 'Demo Screen 3',
-      },
-    },
+    
   },
   {
-    //For the Custom sidebar menu we have to provide our CustomSidebarMenu
+    
     contentComponent: CustomSidebarMenu,
     //Sidebar width
-    drawerWidth: Dimensions.get('window').width - 130,
+    drawerWidth: Dimensions.get('window').width - 128,
   }
 );
-export default createAppContainer(DrawerNavigatorExample);
+export default createAppContainer(DrawerNavigator);

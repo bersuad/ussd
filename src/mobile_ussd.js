@@ -65,7 +65,8 @@ export default class FlexDirectionBasics extends Component {
                 }
             );
             if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-              console.log(this.state.pincode);
+              // console.log(this.state.pincode);
+              this.setState({ isVisible:!this.state.isVisible});
               RNImmediatePhoneCall.immediatePhoneCall(`*901*${this.state.pincode}*1*2#`);
             } else {
                 Alert.alert(

@@ -71,8 +71,7 @@ export default class CustomSidebarMenu extends Component {
                   color: global.currentScreenIndex === key ? '#FFFFFF' : '#010066',
                 }}
                 onPress={() => {
-                  global.currentScreenIndex = key;
-                  this.props.navigation.navigate(item.screenToNavigate);
+                  alert(item.navOptionName)
                 }}>
                 {item.navOptionName}
               </Text>
