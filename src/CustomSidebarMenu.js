@@ -1,6 +1,6 @@
 //This is an example code for Navigation Drawer with Custom Side bar//
 import React, { Component } from 'react';
-import { View, StyleSheet, Image, Text } from 'react-native';
+import { View, StyleSheet, Image, Text, Modal } from 'react-native';
 import { Icon } from 'react-native-elements';
 
 export default class CustomSidebarMenu extends Component {
@@ -10,25 +10,31 @@ export default class CustomSidebarMenu extends Component {
     
     this.items = [
       {
-        navOptionThumb: 'camera',
-        navOptionName: 'First Screen',
-        screenToNavigate: 'NavScreen1',
+        navOptionThumb: 'lock',
+        navOptionName: 'Change Pincode',
       },
       {
-        navOptionThumb: 'image',
-        navOptionName: 'Second Screen',
-        screenToNavigate: 'NavScreen2',
+        navOptionThumb: 'language',
+        navOptionName: 'Change USSD Language',
       },
       {
-        navOptionThumb: 'build',
-        navOptionName: 'Third Screen',
-        screenToNavigate: 'NavScreen3',
+        navOptionThumb: 'smartphone',
+        navOptionName: 'Change App Language',
+      },
+      {
+        navOptionThumb: 'block',
+        navOptionName: 'Block Transaction',
+      },
+      {
+        navOptionThumb: 'share',
+        navOptionName: 'Share',
       },
     ];
   }
   render() {
     return (
       <View style={styles.sideMenuContainer}>
+       
         {/*Top Large Image */}
         <Image
           source={require('./../assets/images/awash.png')}

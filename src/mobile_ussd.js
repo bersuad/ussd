@@ -31,7 +31,7 @@ export default class FlexDirectionBasics extends Component {
         items:[
             {
                 data: [
-          {id:1,  name: "Check Balance", url:`*901*${this.state.pincode}*1*2#`,         image:require("./../assets/images/bonds.png"),   count:124.711},
+          {id:1,  name: "Check Balance", url:`*901*${this.state.pincode}*1*2#`,         image:require("./../assets/images/bonds.png"),   count:'isVis'},
           {id:2,  name: "Mobile Card", url:"",  image:require("./../assets/images/mobile-payment.png"),        count:114.888} ,
           {id:3,  name: "Send Mobile Card", url:"",  image:require("./../assets/images/send_card.png"),        count:114.888} ,
           {id:4,  name: "Money Transfer",url:``,         image:require("./../assets/images/transfer.png"),        count:114.888} ,
@@ -132,7 +132,7 @@ export default class FlexDirectionBasics extends Component {
         </Modal>
         
         <SuperGridSectionList        
-            itemDimension={126}     
+            itemDimension={124}     
             sections={this.state.items}
             keyExtractor= {(item) => {
             return item.id.toString();
@@ -141,15 +141,11 @@ export default class FlexDirectionBasics extends Component {
             renderItem={({item}) => {
             return (
                 <View style={styles.listGrid}>
-                    <TouchableOpacity style={styles.card} onPress={() => {this.setState({ isVisible: true})}}>
+                    <TouchableOpacity style={styles.card} onPress ={()=>{this.setState({ isVisible: true})}}>
                         {/* onPress ={()=>{this.setState({ isVisible: true})}} */}
                         <Image style={styles.image} source={item.image}/>
                         <View style={styles.cardContent}>
                             <Text style={styles.name}>{item.name}</Text>
-                            {/* <Text style={styles.count}>{item.count}</Text> */}
-                            {/* <TouchableOpacity style={styles.followButton} onPress={()=> this.clickEventListener(item)}>
-                                <Text style={styles.followButtonText}>Explore now</Text>  
-                            </TouchableOpacity> */}
                         </View>
                     </TouchableOpacity>
                 </View>            

@@ -41,8 +41,8 @@ class NavigationDrawerStructure extends Component {
             size={36}  
             style={{marginLeft: 20}}
           />  
-          {/* <Image source={require('./../assets/images/awash.png')} style={{width: 40, height:40, marginLeft: '100%'}}/> */}
         </TouchableOpacity>
+        {/* <Image source={require('./../assets/images/awash.png')} style={{width: 40, height:40, marginLeft:50}}/> */}
       </View>
     );
   }
@@ -60,8 +60,8 @@ const FirstActivity_StackNavigator = createStackNavigator({
         backgroundColor: '#F69139',
       },
       headerTintColor: '#fff',
-      headerTitleAlign:'center',
-      headerTitle:'Awash Bank',
+      headerTitleAlign:'left',
+      headerTitle:()=><Image source={require('./../assets/images/awash.png')} style={{width: 40, height:40, marginLeft:50}}/>,
     }),
   },
 });
