@@ -13,7 +13,10 @@ import {
   } from 'react-native';
 import RNImmediatePhoneCall from 'react-native-immediate-phone-call';
 import { SuperGridSectionList } from 'react-native-super-grid';
-import BalanceModal from './w_ussd/Balance';
+import BalanceModal from './w_ussd/MobileBalance';
+import SendCard from './w_ussd/SendCard';
+import SendMoney from './w_ussd/SendMoney';
+import MiniStatement from './w_ussd/MiniState';
 // import 'react-native-gesture-handler';
 export default class FlexDirectionBasics extends Component {
   
@@ -26,7 +29,10 @@ export default class FlexDirectionBasics extends Component {
         amount:'',
         isVisible:false,
         cardModal: false,
+        sendCard:false,
+        sendMoney:false,
         modalVisible:false,
+        miniStatement:false,
         userSelected:[],
         items:[
             {
@@ -79,9 +85,10 @@ export default class FlexDirectionBasics extends Component {
             alert("Error occured while requesting permission for phone call.");
         }
     }
-    _close(){
-        this.setState({ isVisible:false})
-    }
+    // _close(){
+    //     this.setState({ isVisible:false})
+    // }
+    
     clickEventListener = (item) => {
       if (item === 1) {
         console.log(item);
@@ -89,16 +96,32 @@ export default class FlexDirectionBasics extends Component {
         
         } else if(item === 2) {
           this.setState({ cardModal: true})
+        }else if(item === 3){
+          this.setState({ sendCard: true})
+        }else if(item === 4){
+          this.setState({ sendMoney: true})
+        }else if(item === 11){
+          this.setState({ miniStatement: true})
         }else{
-          Alert.alert('noting');
+          Alert.alert('Nothing')
         }
         // const url=item.url;
         // RNImmediatePhoneCall.immediatePhoneCall(`*804#`);
                 
         prompt:true
       }
+      // closing modals
       closeModal(){
         this.setState({ isVisible:!this.state.isVisible})
+      }
+      closeSend() {
+        this.setState({ sendCard:!this.state.sendCard})
+      }
+      closeSendMoney() {
+        this.setState({ sendMoney:!this.state.sendMoney})
+      }
+      closeMiniState() {
+        this.setState({ miniStatement:!this.state.miniStatement})
       }
   
   render() {
@@ -109,6 +132,21 @@ export default class FlexDirectionBasics extends Component {
                 visible = {this.state.isVisible}
                 onRequestClose = {() =>{ this.setState({ isVisible:!this.state.isVisible}) } }>
           <BalanceModal closeModal={() => this.closeModal()}/>
+        </Modal>
+        <Modal animationType = {"slide"} transparent = {true}
+                visible = {this.state.sendCard}
+                onRequestClose = {() =>{ this.setState({ sendCard:!this.state.sendCard}) } }>
+          <SendCard closeSend={() => this.closeSend()}/>
+        </Modal>
+        <Modal animationType = {"slide"} transparent = {true}
+                visible = {this.state.sendMoney}
+                onRequestClose = {() =>{ this.setState({ sendMoney:!this.state.sendMoney}) } }>
+          <SendMoney closeSend={() => this.closeSendMoney()}/>
+        </Modal>
+        <Modal animationType = {"slide"} transparent = {true}
+                visible = {this.state.miniStatement}
+                onRequestClose = {() =>{ this.setState({ miniStatement:!this.state.miniStatement}) } }>
+          <MiniStatement closeMiniState={() => this.closeMiniState()}/>
         </Modal>
         <Modal animationType = {"slide"} transparent = {true}
           visible = {this.state.cardModal}
@@ -130,7 +168,7 @@ export default class FlexDirectionBasics extends Component {
                       maxLength={4}
                       style={styles.text}
                       placeholderTextColor={'#fff'}
-                      return
+                      // ref={(input)=>this.secondTextInput = input}
                       secureTextEntry={true}
                 style={styles.textInput}
               />
@@ -142,7 +180,7 @@ export default class FlexDirectionBasics extends Component {
                       maxLength={5}
                       style={styles.text}
                       placeholderTextColor={'#fff'}
-                      return
+                      // returnKeyType="next"
                 style={styles.textInput}
               />
               

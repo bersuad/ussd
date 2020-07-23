@@ -60,7 +60,7 @@ const FirstActivity_StackNavigator = createStackNavigator({
       },
       headerTintColor: '#fff',
       headerTitleAlign:'left',
-      headerTitle:()=><Image source={require('./../assets/images/awash.png')} style={{width: 40, height:40, marginLeft:50}}/>,
+      headerTitle:()=><Image source={require('./../assets/images/header_image.png')} style={{width: 140, height:40, marginLeft:50}}/>,
     }),
   },
 });

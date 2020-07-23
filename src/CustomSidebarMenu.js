@@ -2,16 +2,20 @@
 import React, { Component } from 'react';
 import { View, StyleSheet, Image, Text, Modal } from 'react-native';
 import { Icon } from 'react-native-elements';
+import Pincode from './general/PinCode';
 
 export default class CustomSidebarMenu extends Component {
   constructor() {
     super();
     this.proileImage ='./../assets/images/awash.png';
-    
+    this.state={
+      pinModal:false,
+    }
     this.items = [
       {
         navOptionThumb: 'lock',
         navOptionName: 'Change Pincode',
+        navID:'1'
       },
       {
         navOptionThumb: 'language',
@@ -31,10 +35,22 @@ export default class CustomSidebarMenu extends Component {
       },
     ];
   }
+  clickEventListener = (item) => {
+    if (item === 1) {
+      this.setState({ pinModal: true})
+    }
+  }
+  closeModal() {
+    this.setState({ pinModal:!this.state.pinModal})
+  }
   render() {
     return (
       <View style={styles.sideMenuContainer}>
-       
+        <Modal animationType = {"slide"} transparent = {true}
+                visible = {this.state.pinModal}
+                onRequestClose = {() =>{ this.setState({ pinModal:!this.state.pinModal}) } }>
+          <Pincode closePincodeModal={() => this.closeModal()}/>
+        </Modal>
         {/*Top Large Image */}
         <Image
           source={require('./../assets/images/awash.png')}
@@ -59,7 +75,7 @@ export default class CustomSidebarMenu extends Component {
                 alignItems: 'center',
                 paddingTop: 10,
                 paddingBottom: 10,
-                backgroundColor: global.currentScreenIndex === key ? '#7171bc' : '#ffffff',
+                // backgroundColor: global.currentScreenIndex === key ? '#7171bc' : '#ffffff',
               }}
               key={key}>
               <View style={{ marginRight: 10, marginLeft: 20 }}>
@@ -68,11 +84,9 @@ export default class CustomSidebarMenu extends Component {
               <Text
                 style={{
                   fontSize: 15,
-                  color: global.currentScreenIndex === key ? '#FFFFFF' : '#010066',
+                  color: global.currentScreenIndex ? '#FFFFFF' : '#010066',
                 }}
-                onPress={() => {
-                  alert(item.navOptionName)
-                }}>
+                onPress ={()=>this.setState({ pinModal: true})}>
                 {item.navOptionName}
               </Text>
             </View>
