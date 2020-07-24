@@ -1,15 +1,19 @@
 //This is an example code for Navigation Drawer with Custom Side bar//
 import React, { Component } from 'react';
-import { View, StyleSheet, Image, Text, Modal } from 'react-native';
+import { View, StyleSheet, Image, Text, Modal, Share } from 'react-native';
 import { Icon } from 'react-native-elements';
 import Pincode from './general/PinCode';
+import UssdLanguage from './general/UssdLang';
 
 export default class CustomSidebarMenu extends Component {
+  
   constructor() {
+    
     super();
     this.proileImage ='./../assets/images/awash.png';
     this.state={
       pinModal:false,
+      language:false,
     }
     this.items = [
       {
@@ -20,11 +24,12 @@ export default class CustomSidebarMenu extends Component {
       {
         navOptionThumb: 'language',
         navOptionName: 'Change USSD Language',
+        navID: '2'
       },
-      {
-        navOptionThumb: 'smartphone',
-        navOptionName: 'Change App Language',
-      },
+      // {
+      //   navOptionThumb: 'smartphone',
+      //   navOptionName: 'Change App Language',
+      // },
       {
         navOptionThumb: 'block',
         navOptionName: 'Block Transaction',
@@ -32,20 +37,56 @@ export default class CustomSidebarMenu extends Component {
       {
         navOptionThumb: 'share',
         navOptionName: 'Share',
+        navID: '4'
       },
     ];
   }
-  clickEventListener = (item) => {
-    if (item === 1) {
+  settingListener = (item) => {
+    console.log(item);
+    if (item == 1) {
       this.setState({ pinModal: true})
     }
+    if (item == 2) {
+      this.setState({ language: true})
+    }
+    if (item == 4) {
+      this._lang()
+    }
+  }
+  closeLanguage(){
+    this.setState({ language:!this.state.language})
   }
   closeModal() {
     this.setState({ pinModal:!this.state.pinModal})
   }
+
+   async _lang() {
+    try {
+      const result = await Share.share({
+        message:'https://www.google.com'
+      });
+      if (result.action === Share.sharedAction) {
+        if (result.activityType) {
+          // shared with activity type of result.activityType
+        } else {
+          // shared
+        }
+      } else if (result.action === Share.dismissedAction) {
+        // dismissed
+      }
+    } catch (error) {
+      alert(error.message);
+    }
+  }
+  
   render() {
     return (
       <View style={styles.sideMenuContainer}>
+        <Modal animationType = {"slide"} transparent = {true}
+                visible = {this.state.language}
+                onRequestClose = {() =>{ this.setState({ language:!this.state.language}) } }>
+          <UssdLanguage closeLangModal={() => this.closeLanguage()}/>
+        </Modal>
         <Modal animationType = {"slide"} transparent = {true}
                 visible = {this.state.pinModal}
                 onRequestClose = {() =>{ this.setState({ pinModal:!this.state.pinModal}) } }>
@@ -86,7 +127,7 @@ export default class CustomSidebarMenu extends Component {
                   fontSize: 15,
                   color: global.currentScreenIndex ? '#FFFFFF' : '#010066',
                 }}
-                onPress ={()=>this.setState({ pinModal: true})}>
+                onPress ={()=>this.settingListener(item.navID)}>
                 {item.navOptionName}
               </Text>
             </View>
