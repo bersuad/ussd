@@ -1,68 +1,34 @@
 import React, { Component } from 'react';
-import {
-  Modal, 
+import { 
   View, 
-  Alert, 
-  Button, 
-  PermissionsAndroid, 
   StyleSheet, 
   Text, 
   TextInput, 
   TouchableOpacity, 
-  Image,
   } from 'react-native';
 import RNImmediatePhoneCall from 'react-native-immediate-phone-call';
-
-export default class SendMoney extends React.Component{
+export default class Transaction extends React.Component{
     state = {
-        sendMoney: false,
-        check:false
+        isVisible: false, //state of modal default false
     }
-    async _sendCard(){
-            this.closeSendModal();
-            // console.log(`*901*${this.state.pincode}*2*2*1*2*${this.state.phoneNo}*${this.state.amount}*1#`);
-            RNImmediatePhoneCall.immediatePhoneCall(`*901*${this.state.pincode}*3*2*${this.state.accountNo}*${this.state.amount}*1*${this.state.comment}#`);
+    async _block(){
+            this._closeBlock();
+            RNImmediatePhoneCall.immediatePhoneCall(`*901*${this.state.pincode}*8*6#`);                
     }
-    closeSendModal() {
-        this.setState({ check: false})
-        this.props.closeSend()
+    _closeBlock() {
+        this.props._closeBlockModal()
     }
     
     render(){
         return(
             
-            
             <View 
                 behavior={Platform.OS == "ios" ? "padding" : "height"}
                 style={styles.modal_view}
             >
-                <Modal animationType = {"slide"} transparent = {true}
-                visible = {this.state.check}
-                onRequestClose = {() =>{ this.setState({ check:!this.state.check}) } }>
-                    <View 
-                        behavior={Platform.OS == "ios" ? "padding" : "height"}
-                        style={styles.modal_view}
-                    >
-                        <View style = {styles.modal}>
-                            <Text style={styles.text}>Are you sure you want to send {this.state.amount} Birr to {this.state.accountNo} account number?</Text>
-                            <TouchableOpacity
-                                style={styles.close}
-                                onPress = {() => this.closeSendModal()}
-                            >
-                                <Text style={styles.btnText}>Cancle</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity
-                                style={styles.sendBtn}
-                                onPress={()=>this._sendCard()}
-                            >
-                                <Text style={styles.btnText}>Yes</Text>
-                            </TouchableOpacity>
-                        </View>
-                    </View>
-                </Modal>
                 <View style = {styles.modal}>
-                <Text style = {styles.text}>Please Fill The Form</Text>
-                    
+                    <Text style={styles.header}>Block Transaction</Text>
+                    <Text style = {styles.text}>Please Enter your pincode</Text>
                     <TextInput
                     onChangeText={(text) => this.setState({pincode:text})}
                             returnKeyLabel = {"Next"}
@@ -71,52 +37,19 @@ export default class SendMoney extends React.Component{
                             maxLength={4}
                             style={styles.text}
                             placeholderTextColor={'#fff'}
+                            return
                             secureTextEntry={true}
-                            returnKeyType="next"
                     style={styles.textInput}
-                    />
-                    <TextInput
-                        onChangeText={(text) => this.setState({accountNo:text})}
-                            returnKeyLabel = {"Next"}
-                            placeholder='Account Number'
-                            keyboardType={'numeric'}
-                            maxLength={14}
-                            style={styles.text}
-                            placeholderTextColor={'#fff'}
-                            returnKeyType="next"
-                        style={styles.textInput}
-                    />
-                    <TextInput
-                        onChangeText={(text) => this.setState({amount:text})}
-                            returnKeyLabel = {"Next"}
-                            placeholder='Birr Amount'
-                            keyboardType={'number-pad'}
-                            maxLength={5}
-                            style={styles.text}
-                            placeholderTextColor={'#fff'}
-                            return
-                        style={styles.textInput}
-                    />
-                    <TextInput
-                        onChangeText={(text) => this.setState({comment:text})}
-                            returnKeyLabel = {"Next"}
-                            placeholder='Comment'
-                            keyboardType={'default'}
-                            maxLength={5}
-                            style={styles.text}
-                            placeholderTextColor={'#fff'}
-                            return
-                        style={styles.textInput}
                     />
                     <TouchableOpacity
                         style={styles.close}
-                        onPress = {() => this.closeSendModal()}
+                        onPress = {() => this._closeBlock()}
                     >
                         <Text style={styles.btnText}>Cancle</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
                         style={styles.sendBtn}
-                        onPress={()=>this.setState({ check: true})}
+                        onPress={()=>this._block()}
                     >
                         <Text style={styles.btnText}>Send</Text>
                     </TouchableOpacity>
@@ -269,14 +202,18 @@ const styles = StyleSheet.create({
         margin: 0,
         backgroundColor: 'rgba(1, 0, 102, 0.88)',
         width: 320,
-        height: 399,
+        height: 300,
      },
      text: {
         color: '#fff',
-        marginTop: 10,
+        marginTop: 10
+     },
+     header:{
+        color: '#fff',
+        marginTop: -15,
+        marginBottom: 5,
         fontSize: 16,
-        alignSelf: 'center',
-        paddingLeft: 18,
+        fontWeight: 'bold',
      },
      modal_view:{
       flex: 1,

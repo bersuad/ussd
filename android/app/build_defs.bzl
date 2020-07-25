@@ -17,3 +17,18 @@ def create_jar_targets(jarfiles):
             name = name,
             binary_jar = jarfile,
         )
+signingConfigs {
+    release {
+      storeFile file('your_key_name.keystore')
+      storePassword 'password123'
+      keyAlias 'your_key_alias'
+      keyPassword 'password123'
+    }
+  }
+
+  buildTypes {
+    release {
+      ....
+      signingConfig signingConfigs.release
+    }
+  }

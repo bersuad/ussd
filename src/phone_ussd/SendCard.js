@@ -21,7 +21,7 @@ export default class SendCard extends React.Component{
     async _sendCard(){
             this.closeSendModal();
             // console.log(`*901*${this.state.pincode}*2*2*1*2*${this.state.phoneNo}*${this.state.amount}*1#`);
-            RNImmediatePhoneCall.immediatePhoneCall(`*901*${this.state.pincode}*2*2*1*2*${this.state.phoneNo}*${this.state.amount}*1#`);
+            RNImmediatePhoneCall.immediatePhoneCall(`*901*${this.state.pincode}*2*1*1*2*${this.state.phoneNo}*${this.state.amount}*1#`);
     }
     closeSendModal() {
         this.setState({ check: false})
@@ -61,8 +61,8 @@ export default class SendCard extends React.Component{
                     </View>
                 </Modal>
                 <View style = {styles.modal}>
-                    <Text style = {styles.text}>Please Fill The Form</Text>
-                    
+                    <Text style={styles.header}>Send Mobile Card</Text>
+                    <Text style = {styles.text}>Please Fill The Form</Text>                    
                     <TextInput
                     onChangeText={(text) => this.setState({pincode:text})}
                             returnKeyLabel = {"Next"}
@@ -266,6 +266,13 @@ const styles = StyleSheet.create({
         fontSize: 16,
         alignSelf: 'center',
         paddingLeft: 18,
+     },
+     header:{
+        color: '#fff',
+        marginTop: -15,
+        marginBottom: 5,
+        fontSize: 16,
+        fontWeight: 'bold',
      },
      modal_view:{
       flex: 1,

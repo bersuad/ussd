@@ -12,27 +12,56 @@ import {
   Image,
   } from 'react-native';
 import RNImmediatePhoneCall from 'react-native-immediate-phone-call';
-export default class BalanceModal extends React.Component{
+
+export default class SendMoney extends React.Component{
     state = {
-        isVisible: false, //state of modal default false
+        sendMoney: false,
+        check:false
     }
-    async _balance(){
-            this._close();
-            RNImmediatePhoneCall.immediatePhoneCall(`*901*${this.state.pincode}*1*1#`);                
+    async _sendCard(){
+            this.closeSendModal();
+            RNImmediatePhoneCall.immediatePhoneCall(`*901*${this.state.pincode}*3*2*${this.state.accountNo}*${this.state.amount}*1*${this.state.comment}#`);
     }
-    _close() {
-        this.props.closeModal()
+    closeSendModal() {
+        this.setState({ check: false})
+        this.props.closeSend()
     }
     
     render(){
         return(
             
+            
             <View 
                 behavior={Platform.OS == "ios" ? "padding" : "height"}
                 style={styles.modal_view}
             >
+                <Modal animationType = {"slide"} transparent = {true}
+                visible = {this.state.check}
+                onRequestClose = {() =>{ this.setState({ check:!this.state.check}) } }>
+                    <View 
+                        behavior={Platform.OS == "ios" ? "padding" : "height"}
+                        style={styles.modal_view}
+                    >
+                        <View style = {styles.modal}>
+                            <Text style={styles.text}>Are you sure you want to send {this.state.amount} Birr to {this.state.accountNo} account number?</Text>
+                            <TouchableOpacity
+                                style={styles.close}
+                                onPress = {() => this.closeSendModal()}
+                            >
+                                <Text style={styles.btnText}>Cancle</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity
+                                style={styles.sendBtn}
+                                onPress={()=>this._sendCard()}
+                            >
+                                <Text style={styles.btnText}>Yes</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                </Modal>
                 <View style = {styles.modal}>
-                    <Text style = {styles.text}>Please Enter your wallet Balance pincode</Text>
+                    <Text style={styles.header}>Send money to another account</Text>
+                    <Text style = {styles.text}>Please Fill The Form</Text>
                     
                     <TextInput
                     onChangeText={(text) => this.setState({pincode:text})}
@@ -42,19 +71,52 @@ export default class BalanceModal extends React.Component{
                             maxLength={4}
                             style={styles.text}
                             placeholderTextColor={'#fff'}
-                            return
                             secureTextEntry={true}
+                            returnKeyType="next"
                     style={styles.textInput}
+                    />
+                    <TextInput
+                        onChangeText={(text) => this.setState({accountNo:text})}
+                            returnKeyLabel = {"Next"}
+                            placeholder='Account Number'
+                            keyboardType={'numeric'}
+                            maxLength={14}
+                            style={styles.text}
+                            placeholderTextColor={'#fff'}
+                            returnKeyType="next"
+                        style={styles.textInput}
+                    />
+                    <TextInput
+                        onChangeText={(text) => this.setState({amount:text})}
+                            returnKeyLabel = {"Next"}
+                            placeholder='Birr Amount'
+                            keyboardType={'number-pad'}
+                            maxLength={5}
+                            style={styles.text}
+                            placeholderTextColor={'#fff'}
+                            return
+                        style={styles.textInput}
+                    />
+                    <TextInput
+                        onChangeText={(text) => this.setState({comment:text})}
+                            returnKeyLabel = {"Next"}
+                            placeholder='Comment'
+                            keyboardType={'default'}
+                            maxLength={5}
+                            style={styles.text}
+                            placeholderTextColor={'#fff'}
+                            return
+                        style={styles.textInput}
                     />
                     <TouchableOpacity
                         style={styles.close}
-                        onPress = {() => this._close()}
+                        onPress = {() => this.closeSendModal()}
                     >
                         <Text style={styles.btnText}>Cancle</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
                         style={styles.sendBtn}
-                        onPress={()=>this._balance()}
+                        onPress={()=>this.setState({ check: true})}
                     >
                         <Text style={styles.btnText}>Send</Text>
                     </TouchableOpacity>
@@ -207,11 +269,21 @@ const styles = StyleSheet.create({
         margin: 0,
         backgroundColor: 'rgba(1, 0, 102, 0.88)',
         width: 320,
-        height: 300,
+        height: 399,
      },
      text: {
         color: '#fff',
-        marginTop: 10
+        marginTop: 10,
+        fontSize: 16,
+        alignSelf: 'center',
+        paddingLeft: 18,
+     },
+     header:{
+        color: '#fff',
+        marginTop: -15,
+        marginBottom: 5,
+        fontSize: 16,
+        fontWeight: 'bold',
      },
      modal_view:{
       flex: 1,

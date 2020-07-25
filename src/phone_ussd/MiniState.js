@@ -12,101 +12,50 @@ import {
   Image,
   } from 'react-native';
 import RNImmediatePhoneCall from 'react-native-immediate-phone-call';
-
-export default class Pincode extends React.Component{
+export default class MiniStatement extends React.Component{
     state = {
-        pincode: false,
-        checkPin:false
+        miniStatement: false, //state of modal default false
     }
-    async _sendPin(){
-            this.closePin();
-            // console.log(`*901*${this.state.pincode}*2*2*1*2*${this.state.phoneNo}*${this.state.amount}*1#`);
-            RNImmediatePhoneCall.immediatePhoneCall(`*901*${this.state.currentPincode}*8*3*${this.state.currentPincode}*${this.state.newPincode}*${this.state.confirmPincode}*1#`);
+    async _miniState(){
+            this._closeMini();
+            RNImmediatePhoneCall.immediatePhoneCall(`*901*${this.state.pincode}*8*1*1#`);                
     }
-    closePin() {
-        this.setState({ checkPin: false})
-        this.props.closePincodeModal()
+    _closeMini() {
+        this.props.closeMiniState();
     }
     
     render(){
         return(
             
-            
             <View 
                 behavior={Platform.OS == "ios" ? "padding" : "height"}
                 style={styles.modal_view}
             >
-                <Modal animationType = {"slide"} transparent = {true}
-                visible = {this.state.checkPin}
-                onRequestClose = {() =>{ this.setState({ check:!this.state.checkPin}) } }>
-                    <View 
-                        behavior={Platform.OS == "ios" ? "padding" : "height"}
-                        style={styles.modal_view}
-                    >
-                        <View style = {styles.modal}>
-                            <Text style={styles.text}>Are you sure you want to change your pincode from **** to {this.state.newPincode}?</Text>
-                            <TouchableOpacity
-                                style={styles.close}
-                                onPress = {() => this.closePin()}
-                            >
-                                <Text style={styles.btnText}>Cancle</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity
-                                style={styles.sendBtn}
-                                onPress={()=>this._sendPin()}
-                            >
-                                <Text style={styles.btnText}>Yes</Text>
-                            </TouchableOpacity>
-                        </View>
-                    </View>
-                </Modal>
                 <View style = {styles.modal}>
-                    <Text style={styles.header}>Change Pincode</Text>
-                    <Text style = {styles.text}>Please Fill The Form</Text>
+                    <Text style={styles.header}>Request Mini Statement</Text>
+                    <Text style = {styles.text}>Please Enter pincode</Text>
                     
                     <TextInput
-                    onChangeText={(text) => this.setState({currentPincode:text})}
+                    onChangeText={(text) => this.setState({pincode:text})}
                             returnKeyLabel = {"Next"}
-                            placeholder='Current Pincode'
+                            placeholder='Pin Code'
                             keyboardType={'numeric'}
                             maxLength={4}
                             style={styles.text}
                             placeholderTextColor={'#fff'}
-                            secureTextEntry={true}
-                            returnKeyType="next"
-                    style={styles.textInput}
-                    />
-                    <TextInput
-                        onChangeText={(text) => this.setState({newPincode:text})}
-                            returnKeyLabel = {"Next"}
-                            placeholder='New Pincode'
-                            keyboardType={'numeric'}
-                            maxLength={10}
-                            style={styles.text}
-                            placeholderTextColor={'#fff'}
-                            returnKeyType="next"
-                        style={styles.textInput}
-                    />
-                    <TextInput
-                        onChangeText={(text) => this.setState({confirmPincode:text})}
-                            returnKeyLabel = {"Next"}
-                            placeholder='Confirm Pincode'
-                            keyboardType={'numeric'}
-                            maxLength={5}
-                            style={styles.text}
-                            placeholderTextColor={'#fff'}
                             return
-                        style={styles.textInput}
+                            secureTextEntry={true}
+                    style={styles.textInput}
                     />
                     <TouchableOpacity
                         style={styles.close}
-                        onPress = {() => this.closePin()}
+                        onPress = {() => this._closeMini()}
                     >
                         <Text style={styles.btnText}>Cancle</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
                         style={styles.sendBtn}
-                        onPress={()=>this.setState({ checkPin: true})}
+                        onPress={()=>this._miniState()}
                     >
                         <Text style={styles.btnText}>Send</Text>
                     </TouchableOpacity>
@@ -259,14 +208,11 @@ const styles = StyleSheet.create({
         margin: 0,
         backgroundColor: 'rgba(1, 0, 102, 0.88)',
         width: 320,
-        height: 455,
+        height: 300,
      },
      text: {
         color: '#fff',
-        marginTop: 10,
-        fontSize: 16,
-        alignSelf: 'center',
-        paddingLeft: 18,
+        marginTop: 5
      },
      header:{
         color: '#fff',

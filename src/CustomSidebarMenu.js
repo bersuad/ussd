@@ -4,6 +4,7 @@ import { View, StyleSheet, Image, Text, Modal, Share } from 'react-native';
 import { Icon } from 'react-native-elements';
 import Pincode from './general/PinCode';
 import UssdLanguage from './general/UssdLang';
+import Transaction from './general/Transaction';
 
 export default class CustomSidebarMenu extends Component {
   
@@ -12,8 +13,9 @@ export default class CustomSidebarMenu extends Component {
     super();
     this.proileImage ='./../assets/images/awash.png';
     this.state={
-      pinModal:false,
-      language:false,
+      pinModal: false,
+      language: false,
+      stop:     false,
     }
     this.items = [
       {
@@ -26,13 +28,10 @@ export default class CustomSidebarMenu extends Component {
         navOptionName: 'Change USSD Language',
         navID: '2'
       },
-      // {
-      //   navOptionThumb: 'smartphone',
-      //   navOptionName: 'Change App Language',
-      // },
       {
         navOptionThumb: 'block',
-        navOptionName: 'Block Transaction',
+        navOptionName: 'Stop Payment Request',
+        navID: '3'
       },
       {
         navOptionThumb: 'share',
@@ -49,8 +48,11 @@ export default class CustomSidebarMenu extends Component {
     if (item == 2) {
       this.setState({ language: true})
     }
+    if (item == 3) {
+      this.setState({ stop: true})
+    }
     if (item == 4) {
-      this._lang()
+      this._share()
     }
   }
   closeLanguage(){
@@ -59,8 +61,11 @@ export default class CustomSidebarMenu extends Component {
   closeModal() {
     this.setState({ pinModal:!this.state.pinModal})
   }
+  closeTransaction() {
+    this.setState({ stop:!this.state.stop})
+  }
 
-   async _lang() {
+   async _share() {
     try {
       const result = await Share.share({
         message:'https://www.google.com'
@@ -91,6 +96,11 @@ export default class CustomSidebarMenu extends Component {
                 visible = {this.state.pinModal}
                 onRequestClose = {() =>{ this.setState({ pinModal:!this.state.pinModal}) } }>
           <Pincode closePincodeModal={() => this.closeModal()}/>
+        </Modal>
+        <Modal animationType = {"slide"} transparent = {true}
+                visible = {this.state.stop}
+                onRequestClose = {() =>{ this.setState({ pinModal:!this.state.stop}) } }>
+          <Transaction _closeBlockModal={() => this.closeTransaction()}/>
         </Modal>
         {/*Top Large Image */}
         <Image

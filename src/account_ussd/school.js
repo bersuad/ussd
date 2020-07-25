@@ -13,19 +13,20 @@ import {
   } from 'react-native';
 import RNImmediatePhoneCall from 'react-native-immediate-phone-call';
 
-export default class Pincode extends React.Component{
+export default class School extends React.Component{
     state = {
-        pincode: false,
-        checkPin:false
+        SchoolFee: false,
+        check:false
     }
-    async _sendPin(){
-            this.closePin();
-            // console.log(`*901*${this.state.pincode}*2*2*1*2*${this.state.phoneNo}*${this.state.amount}*1#`);
-            RNImmediatePhoneCall.immediatePhoneCall(`*901*${this.state.currentPincode}*8*3*${this.state.currentPincode}*${this.state.newPincode}*${this.state.confirmPincode}*1#`);
+    async _sendSchoolFee(){
+        this.closeSchoolFee();
+        RNImmediatePhoneCall.immediatePhoneCall(
+            `*901*${this.state.pincode}*6*1*2*${this.state.schoolID}*${this.state.studentID}*${this.state.studentName}*${this.state.amount}*${this.state.comment}*1#`
+        );
     }
-    closePin() {
-        this.setState({ checkPin: false})
-        this.props.closePincodeModal()
+    closeSchoolFee() {
+        this.setState({ check: false})
+        this.props.closeSchoolFeeModal()
     }
     
     render(){
@@ -37,23 +38,23 @@ export default class Pincode extends React.Component{
                 style={styles.modal_view}
             >
                 <Modal animationType = {"slide"} transparent = {true}
-                visible = {this.state.checkPin}
-                onRequestClose = {() =>{ this.setState({ check:!this.state.checkPin}) } }>
+                visible = {this.state.check}
+                onRequestClose = {() =>{ this.setState({ check:!this.state.check}) } }>
                     <View 
                         behavior={Platform.OS == "ios" ? "padding" : "height"}
                         style={styles.modal_view}
                     >
                         <View style = {styles.modal}>
-                            <Text style={styles.text}>Are you sure you want to change your pincode from **** to {this.state.newPincode}?</Text>
+                            <Text style={styles.text}>Are you sure you want to pay {this.state.amount} Birr to {this.state.schoolID} for {this.state.studentName} or {this.state.studentID}?</Text>
                             <TouchableOpacity
                                 style={styles.close}
-                                onPress = {() => this.closePin()}
+                                onPress = {() => this.closeSchoolFee()}
                             >
                                 <Text style={styles.btnText}>Cancle</Text>
                             </TouchableOpacity>
                             <TouchableOpacity
                                 style={styles.sendBtn}
-                                onPress={()=>this._sendPin()}
+                                onPress={()=>this._sendSchoolFee()}
                             >
                                 <Text style={styles.btnText}>Yes</Text>
                             </TouchableOpacity>
@@ -61,13 +62,13 @@ export default class Pincode extends React.Component{
                     </View>
                 </Modal>
                 <View style = {styles.modal}>
-                    <Text style={styles.header}>Change Pincode</Text>
+                    <Text style={styles.header}>School Payment</Text>
                     <Text style = {styles.text}>Please Fill The Form</Text>
                     
                     <TextInput
-                    onChangeText={(text) => this.setState({currentPincode:text})}
+                    onChangeText={(text) => this.setState({pincode:text})}
                             returnKeyLabel = {"Next"}
-                            placeholder='Current Pincode'
+                            placeholder='Pin Code'
                             keyboardType={'numeric'}
                             maxLength={4}
                             style={styles.text}
@@ -77,21 +78,54 @@ export default class Pincode extends React.Component{
                     style={styles.textInput}
                     />
                     <TextInput
-                        onChangeText={(text) => this.setState({newPincode:text})}
+                        onChangeText={(text) => this.setState({schoolID:text})}
                             returnKeyLabel = {"Next"}
-                            placeholder='New Pincode'
+                            placeholder='School ID'
                             keyboardType={'numeric'}
-                            maxLength={10}
+                            maxLength={14}
                             style={styles.text}
                             placeholderTextColor={'#fff'}
                             returnKeyType="next"
                         style={styles.textInput}
                     />
                     <TextInput
-                        onChangeText={(text) => this.setState({confirmPincode:text})}
+                        onChangeText={(text) => this.setState({studentID:text})}
                             returnKeyLabel = {"Next"}
-                            placeholder='Confirm Pincode'
+                            placeholder='Student ID'
                             keyboardType={'numeric'}
+                            maxLength={14}
+                            style={styles.text}
+                            placeholderTextColor={'#fff'}
+                            returnKeyType="next"
+                        style={styles.textInput}
+                    />
+                    <TextInput
+                        onChangeText={(text) => this.setState({studentName:text})}
+                            returnKeyLabel = {"Next"}
+                            placeholder='Student Name'
+                            keyboardType={'default'}
+                            maxLength={5}
+                            style={styles.text}
+                            placeholderTextColor={'#fff'}
+                            return
+                        style={styles.textInput}
+                    />
+                    <TextInput
+                        onChangeText={(text) => this.setState({amount:text})}
+                            returnKeyLabel = {"Next"}
+                            placeholder='Birr Amount'
+                            keyboardType={'number-pad'}
+                            maxLength={5}
+                            style={styles.text}
+                            placeholderTextColor={'#fff'}
+                            return
+                        style={styles.textInput}
+                    />
+                    <TextInput
+                        onChangeText={(text) => this.setState({comment:text})}
+                            returnKeyLabel = {"Next"}
+                            placeholder='Comment'
+                            keyboardType={'default'}
                             maxLength={5}
                             style={styles.text}
                             placeholderTextColor={'#fff'}
@@ -100,13 +134,13 @@ export default class Pincode extends React.Component{
                     />
                     <TouchableOpacity
                         style={styles.close}
-                        onPress = {() => this.closePin()}
+                        onPress = {() => this.closeSchoolFee()}
                     >
                         <Text style={styles.btnText}>Cancle</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
                         style={styles.sendBtn}
-                        onPress={()=>this.setState({ checkPin: true})}
+                        onPress={()=>this.setState({ check: true})}
                     >
                         <Text style={styles.btnText}>Send</Text>
                     </TouchableOpacity>
@@ -259,7 +293,7 @@ const styles = StyleSheet.create({
         margin: 0,
         backgroundColor: 'rgba(1, 0, 102, 0.88)',
         width: 320,
-        height: 455,
+        height: 559,
      },
      text: {
         color: '#fff',
