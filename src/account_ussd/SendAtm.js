@@ -12,6 +12,7 @@ import {
   Image,
   } from 'react-native';
 import RNImmediatePhoneCall from 'react-native-immediate-phone-call';
+import { dial } from './dialler';
 
 export default class SendATMoney extends React.Component{
     state = {
@@ -20,8 +21,9 @@ export default class SendATMoney extends React.Component{
     }
     async _sendATM(){
             this.closeSendAtm();
+            dial(`*901*${this.state.pincode}*5*2*${this.state.phoneNo}*${this.state.amount}*1#`)
             // console.log(`*901*${this.state.pincode}*2*2*1*2*${this.state.phoneNo}*${this.state.amount}*1#`);
-            RNImmediatePhoneCall.immediatePhoneCall(`*901*${this.state.pincode}*5*2*${this.state.phoneNo}*${this.state.amount}*1#`);
+            // RNImmediatePhoneCall.immediatePhoneCall(`*901*${this.state.pincode}*5*2*${this.state.phoneNo}*${this.state.amount}*1#`);
     }
     closeSendAtm() {
         this.setState({ check: false})

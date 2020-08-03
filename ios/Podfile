@@ -1,8 +1,8 @@
 platform :ios, '9.0'
 require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
 
-target 'AwesomeProject' do
-  # Pods for AwesomeProject
+target 'AwashBank' do
+  # Pods for AwashBank
   pod 'FBLazyVector', :path => "../node_modules/react-native/Libraries/FBLazyVector"
   pod 'FBReactNativeSpec', :path => "../node_modules/react-native/Libraries/FBReactNativeSpec"
   pod 'RCTRequired', :path => "../node_modules/react-native/Libraries/RCTRequired"
@@ -36,7 +36,7 @@ target 'AwesomeProject' do
 
   pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
 
-  target 'AwesomeProjectTests' do
+  target 'AwashBankTests' do
     inherit! :search_paths
     # Pods for testing
   end
@@ -44,10 +44,10 @@ target 'AwesomeProject' do
   use_native_modules!
 end
 
-target 'AwesomeProject-tvOS' do
-  # Pods for AwesomeProject-tvOS
+target 'AwashBank-tvOS' do
+  # Pods for AwashBank-tvOS
 
-  target 'AwesomeProject-tvOSTests' do
+  target 'AwashBank-tvOSTests' do
     inherit! :search_paths
     # Pods for testing
   end

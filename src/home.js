@@ -5,7 +5,7 @@ import * as React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import Icon from 'react-native-vector-icons/Ionicons';  
+import Icon from 'react-native-vector-icons/Ionicons'; 
 // import { FontAwesome5 } from 'react-native-vector-icons/vector-icons'; 
 // import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 

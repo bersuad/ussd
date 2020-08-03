@@ -4,7 +4,7 @@ import {
   View, 
   Alert, 
   Button, 
-  PermissionsAndroid, 
+  ScrollView,
   StyleSheet, 
   Text, 
   TextInput, 

@@ -6,7 +6,9 @@ import {
   StyleSheet, 
   Text, 
   TouchableOpacity, 
+  PermissionsAndroid, 
   Image,
+  BackHandler
   } from 'react-native';
 import { SuperGridSectionList } from 'react-native-super-grid';
 import BalanceModal from './phone_ussd/MobileBalance';
@@ -14,9 +16,34 @@ import SendCard from './phone_ussd/SendCard';
 import SendMoney from './phone_ussd/SendMoney';
 import MiniStatement from './phone_ussd/MiniState';
 import MobileCard from './phone_ussd/MobileCard';
-// import 'react-native-gesture-handler';
+import 'react-native-gesture-handler';
 export default class FlexDirectionBasics extends Component {
+  componentDidMount(){
+    this._alert()
+  }
   
+  async _alert(){
+    
+    try {
+        const granted = await PermissionsAndroid.request(
+            PermissionsAndroid.PERMISSIONS.CALL_PHONE,
+            {
+                title: "Phone Call Permission",
+                message:
+                    "Awash Bank needs access to your phone call " +
+                    "so it can use it to top-up your mobile banking sysytem when requested.",
+                buttonPositive: "OK"
+            }
+        );
+        if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+          
+        } else {
+          BackHandler.exitApp()
+        }
+    } catch (err) {
+        alert("Error occured while requesting permission for phone call.");
+    }
+  }
   constructor(props){
     super(props)
 

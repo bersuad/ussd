@@ -58,9 +58,9 @@ export default class UssdLanguage extends React.Component{
                         // RadioStyle={{backgroundColor:'#e2e2e2'}}
                         labelStyle={{color: '#FFFFFF' }}
                     >
-                        <Radio iconName={"lens"} label={"Amharic/English"} value={"1"} />
+                        <Radio iconName={"lens"} label={"አማርኛ/English"} value={"1"} />
                         <Radio iconName={"lens"} label={"Afan Oromo"} value={"2"} />
-                        <Radio iconName={"lens"} label={"Tigregna"} value={"3"} />
+                        <Radio iconName={"lens"} label={"ትግርኛ"} value={"3"} />
                     </RadioGroup>
                     <TouchableOpacity
                         style={styles.close}

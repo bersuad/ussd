@@ -1,3 +1,5 @@
+import 'react-native-gesture-handler';
+import { gestureHandlerRootHOC } from 'react-native-gesture-handler'
 import React, { Component } from 'react';
 import {
   View,
@@ -13,14 +15,14 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import {createAppContainer} from 'react-navigation';
 import {createDrawerNavigator} from 'react-navigation-drawer';
 import {createStackNavigator} from 'react-navigation-stack';
-
 //Import all the screens
 import Screen1 from './home';
 
 
 //Import Custom Sidebar
 import CustomSidebarMenu from './CustomSidebarMenu';
-
+import Ionicons from 'react-native-vector-icons/Ionicons';
+Ionicons.loadFont();
 global.currentScreenIndex = 0;
 //Navigation Drawer Structure for all screen
 class NavigationDrawerStructure extends Component {
@@ -37,8 +39,8 @@ class NavigationDrawerStructure extends Component {
           <Icon  
             name="md-menu"
             color={'#fff'}  
-            size={36}  
-            style={{marginLeft: 20}}
+            size={38}  
+            style={{marginLeft: 15}}
           />  
         </TouchableOpacity>
         {/* <Image source={require('./../assets/images/awash.png')} style={{width: 40, height:40, marginLeft:50}}/> */}
@@ -59,7 +61,7 @@ const FirstActivity_StackNavigator = createStackNavigator({
         backgroundColor: '#F69139',
       },
       headerTintColor: '#fff',
-      headerTitleAlign:'left',
+      headerTitleAlign:'center',
       headerTitle:()=><Image source={require('./../assets/images/header_image.png')} style={{width: 140, height:40, marginLeft:50}}/>,
     }),
   },

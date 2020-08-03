@@ -1,4 +1,5 @@
 //This is an example code for Navigation Drawer with Custom Side bar//
+import 'react-native-gesture-handler';
 import React, { Component } from 'react';
 import { View, StyleSheet, Image, Text, Modal, Share } from 'react-native';
 import { Icon } from 'react-native-elements';
@@ -99,7 +100,7 @@ export default class CustomSidebarMenu extends Component {
         </Modal>
         <Modal animationType = {"slide"} transparent = {true}
                 visible = {this.state.stop}
-                onRequestClose = {() =>{ this.setState({ pinModal:!this.state.stop}) } }>
+                onRequestClose = {() =>{ this.setState({ stop:!this.state.stop}) } }>
           <Transaction _closeBlockModal={() => this.closeTransaction()}/>
         </Modal>
         {/*Top Large Image */}
@@ -134,7 +135,7 @@ export default class CustomSidebarMenu extends Component {
               </View>
               <Text
                 style={{
-                  fontSize: 15,
+                  fontSize: 14,
                   color: global.currentScreenIndex ? '#FFFFFF' : '#010066',
                 }}
                 onPress ={()=>this.settingListener(item.navID)}>
