@@ -146,8 +146,8 @@ const styles = StyleSheet.create({
         height:30,
         width:100,
         color: '#010066',
+        justifyContent: 'center',
         alignItems:'center',
-        padding:6,
         borderRadius: 30,
     },
     close:{
@@ -159,8 +159,8 @@ const styles = StyleSheet.create({
         height:30,
         width:100,
         color: '#010066',
+        justifyContent: 'center',
         alignItems:'center',
-        padding:6,
         borderRadius: 30,
         borderWidth:0.4,
         borderColor:'rgba(255,255,255,0.7)'
