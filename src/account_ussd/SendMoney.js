@@ -20,7 +20,7 @@ export default class SendMoney extends React.Component{
     }
     async _sendCard(){
             this.closeSendModal();
-            RNImmediatePhoneCall.immediatePhoneCall(`*901*${this.state.pincode}*3*2*${this.state.accountNo}*${this.state.amount}*1*${this.state.comment}#`);
+            RNImmediatePhoneCall.immediatePhoneCall(`*901*${this.state.pincode}*3*1*2*${this.state.accountNo}*${this.state.amount}*1*${this.state.comment}#`);
     }
     closeSendModal() {
         this.setState({ check: false})

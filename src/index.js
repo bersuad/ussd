@@ -6,6 +6,7 @@ import {
   Dimensions,
   Image,
   TouchableOpacity,
+  StatusBar,
   StyleSheet,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -17,6 +18,7 @@ import { createStackNavigator } from 'react-navigation-stack';
 //Import all the screens
 import Screen1 from './Spalash';
 import Screen2 from './home';
+import Screen3 from './general/history';
 
 
 //Import Custom Sidebar
@@ -38,9 +40,34 @@ class NavigationDrawerStructure extends Component {
 
     return (
       <View style={styles.MainContainer}>
-        <TouchableOpacity onPress={this.toggleDrawer.bind(this)}>
+        <StatusBar barStyle = "white-content" hidden = {false} backgroundColor = "#010066" translucent = {true}/>
+        <TouchableOpacity onPress={this.toggleDrawer.bind(this)} >
           <Icon
             name="md-menu"
+            color={'#fff'}
+            size={35}
+            style={{ marginLeft: 15 }}
+          />
+        </TouchableOpacity>
+      </View>
+    );
+  }
+}
+
+class NavigationDrawerBack extends Component {
+
+
+  toggleDrawer = () => {
+    this.props.navigationProps.navigate('Second');
+  };
+  render() {
+
+    return (
+      <View style={styles.MainContainer}>
+        <StatusBar barStyle = "white-content" hidden = {false} backgroundColor = "#010066" translucent = {true}/>
+        <TouchableOpacity onPress={this.toggleDrawer.bind(this)} >
+          <Icon
+            name="md-arrow-back"
             color={'#fff'}
             size={35}
             style={{ marginLeft: 15 }}
@@ -83,6 +110,21 @@ const Screen2_StackNavigator = createStackNavigator({
     }),
   },
 });
+const History_StackNavigator = createStackNavigator({
+  //All the screen from the Second Option will be indexed here
+  Third: {
+    screen: Screen3,
+    navigationOptions: ({ navigation }) => ({
+      headerLeft: () => <NavigationDrawerBack navigationProps={navigation} />,
+      headerStyle: {
+        backgroundColor: '#F69139',
+      },
+      headerTintColor: '#fff',
+      headerTitleAlign: 'center',
+      headerTitle: () => <Image source={Logo} style={{ width: 135, height: 35, marginLeft: 0 }} />,
+    }),
+  },
+});
 
 const DrawerNavigator = createDrawerNavigator(
   {
@@ -92,6 +134,9 @@ const DrawerNavigator = createDrawerNavigator(
     },
     NavScreen2: {
       screen: Screen2_StackNavigator,
+    },
+    History: {
+      screen: History_StackNavigator,
     },
 
   },

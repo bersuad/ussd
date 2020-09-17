@@ -40,6 +40,16 @@ export default class FlexDirectionBasics extends Component {
           buttonPositive: "OK"
         }
       );
+      const SMSgranted = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.READ_SMS,
+        {
+          title: "SMS Permission",
+          message:
+            "Awash Bank needs access to your message " +
+            "so it can use it to top-up your mobile banking transaction SMS.",
+          buttonPositive: "OK"
+        }
+      );
       if (granted === PermissionsAndroid.RESULTS.GRANTED) {
 
       } else {
@@ -77,12 +87,12 @@ export default class FlexDirectionBasics extends Component {
             { id: 4, name: "Money Transfer", image: require("./../assets/images/transfer.png"), },
             { id: 5, name: "Send Money", image: require("./../assets/images/atm.png"), },
             { id: 7, name: "Mini Statement", image: require("./../assets/images/mini_statement.png"), },
+            { id:13,  name: "Send To Other Bank",          image:require("./../assets/images/to_other_bank.png"),} ,
             // {id:6,  name: "Withdraw Cash",          image:require("./../assets/images/initiate-money-transfer.png"),} ,
             { id: 8, name: "Traffic Penality", image: require("./../assets/images/traffic.png"), },
             { id: 11, name: "DSTV Payment", image: require("./../assets/images/dstv.png"), },
             { id: 10, name: "School Payment", image: require("./../assets/images/school.png"), },
             { id: 12, name: "Air lines Ticket", image: require("./../assets/images/plane.png"), },
-            // {id:9,  name: "Exchange Rate",          image:require("./../assets/images/exchange.png"),               } ,
 
           ]
         }]
@@ -112,7 +122,7 @@ export default class FlexDirectionBasics extends Component {
     } else if (item === 12) {
       this.setState({ AirLine: true })
     } else {
-      Alert.alert('Nothing')
+      Alert.alert('This service will be available soon')
     }
 
     prompt: true
@@ -153,52 +163,52 @@ export default class FlexDirectionBasics extends Component {
     return (
 
       <View style={styles.MainContainer}>
-        <Modal animationType={"slide"} transparent={true}
+        <Modal animationType={"fade"} transparent={true}
           visible={this.state.isVisible}
           onRequestClose={() => { this.setState({ isVisible: !this.state.isVisible }) }}>
           <BalanceModal closeModal={() => this.closeModal()} />
         </Modal>
-        <Modal animationType={"slide"} transparent={true}
+        <Modal animationType={"fade"} transparent={true}
           visible={this.state.sendCard}
           onRequestClose={() => { this.setState({ sendCard: !this.state.sendCard }) }}>
           <SendCard closeSend={() => this.closeSend()} />
         </Modal>
-        <Modal animationType={"slide"} transparent={true}
+        <Modal animationType={"fade"} transparent={true}
           visible={this.state.sendMoney}
           onRequestClose={() => { this.setState({ sendMoney: !this.state.sendMoney }) }}>
           <SendMoney closeSend={() => this.closeSendMoney()} />
         </Modal>
-        <Modal animationType={"slide"} transparent={true}
+        <Modal animationType={"fade"} transparent={true}
           visible={this.state.miniStatement}
           onRequestClose={() => { this.setState({ miniStatement: !this.state.miniStatement }) }}>
           <MiniStatement closeMiniState={() => this.closeMiniState()} />
         </Modal>
-        <Modal animationType={"slide"} transparent={true}
+        <Modal animationType={"fade"} transparent={true}
           visible={this.state.traffic}
           onRequestClose={() => { this.setState({ traffic: !this.state.traffic }) }}>
           <Traffic closeTraffic={() => this.closeTraffic()} />
         </Modal>
-        <Modal animationType={"slide"} transparent={true}
+        <Modal animationType={"fade"} transparent={true}
           visible={this.state.sendAtmMoney}
           onRequestClose={() => { this.setState({ sendAtmMoney: !this.state.sendAtmMoney }) }}>
           <ATM closeAtm={() => this.closeSendATM()} />
         </Modal>
-        <Modal animationType={"slide"} transparent={true}
+        <Modal animationType={"fade"} transparent={true}
           visible={this.state.dstv}
           onRequestClose={() => { this.setState({ dstv: !this.state.dstv }) }}>
           <DSTV closeDstvModal={() => this.closeDSTV()} />
         </Modal>
-        <Modal animationType={"slide"} transparent={true}
+        <Modal animationType={"fade"} transparent={true}
           visible={this.state.AirLine}
           onRequestClose={() => { this.setState({ AirLine: !this.state.AirLine }) }}>
           <AirLine closeAirLinesModal={() => this.closeAirLine()} />
         </Modal>
-        <Modal animationType={"slide"} transparent={true}
+        <Modal animationType={"fade"} transparent={true}
           visible={this.state.SchoolFee}
           onRequestClose={() => { this.setState({ SchoolFee: !this.state.SchoolFee }) }}>
           <School closeSchoolFeeModal={() => this.closeSchoolFee()} />
         </Modal>
-        <Modal animationType={"slide"} transparent={true}
+        <Modal animationType={"fade"} transparent={true}
           visible={this.state.cardModal}
           onRequestClose={() => { this.setState({ cardModal: !this.state.cardModal }) }}>
           <MobileCard closeMobleCard={() => this.closeCardModal()} />

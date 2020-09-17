@@ -1,7 +1,7 @@
 //This is an example code for Navigation Drawer with Custom Side bar//
 import 'react-native-gesture-handler';
 import React, { Component } from 'react';
-import { View, StyleSheet, Image, Text, Modal, Share } from 'react-native';
+import { View, StyleSheet, Image, Text, Modal, Share, ScrollView } from 'react-native';
 import { Icon } from 'react-native-elements';
 import Pincode from './general/PinCode';
 import UssdLanguage from './general/UssdLang';
@@ -35,6 +35,12 @@ export default class CustomSidebarMenu extends Component {
         navID: '3'
       },
       {
+        navOptionThumb: 'history',
+        navOptionName: 'history',
+        navID: '5',
+        screenToNavigate: 'History',
+      },
+      {
         navOptionThumb: 'share',
         navOptionName: 'Share',
         navID: '4'
@@ -42,7 +48,7 @@ export default class CustomSidebarMenu extends Component {
     ];
   }
   settingListener = (item) => {
-    console.log(item);
+    // console.log(item);
     if (item == 1) {
       this.setState({ pinModal: true})
     }
@@ -54,6 +60,10 @@ export default class CustomSidebarMenu extends Component {
     }
     if (item == 4) {
       this._share()
+    }
+    if(item == 5){
+      // global.currentScreenIndex = key;
+      this.props.navigation.navigate('History')
     }
   }
   closeLanguage(){
@@ -119,7 +129,7 @@ export default class CustomSidebarMenu extends Component {
           }}
         />
         {/*Setting up Navigation Options from option array using loop*/}
-        <View style={{ width: '100%' }}>
+        <ScrollView style={{ width: '100%' }}>
           {this.items.map((item, key) => (
             <View
               style={{
@@ -143,7 +153,7 @@ export default class CustomSidebarMenu extends Component {
               </Text>
             </View>
           ))}
-        </View>
+        </ScrollView>
       </View>
     );
   }
@@ -158,8 +168,8 @@ const styles = StyleSheet.create({
   },
   sideMenuProfileIcon: {
     resizeMode: 'center',
-    width: 120,
-    height: 120,
+    width: 70,
+    height: 70,
     marginTop: 20,
     borderRadius: 150 / 2,
   },
